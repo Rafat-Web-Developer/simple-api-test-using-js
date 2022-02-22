@@ -40,11 +40,11 @@
     <main class="mt-5">
         <section class="container">
             <div class="text-center mb-5">
-              <div class="d-none alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+              <div id="showMessage" class="d-none alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Alhamdulillah!</strong> <span id="showText" class="fw-bold"></span>.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <button class="btn btn-success fw-bold px-5">Add Post</button>
+              <button class="btn btn-success fw-bold px-5" onclick="addPost()">Add Post</button>
             </div>
             <div class="row" id="all_posts">
                 

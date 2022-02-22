@@ -25,3 +25,26 @@ const setPost = posts => {
 }
 
 loadPost();
+
+const newPost = {
+    title: 'New Post',
+    body: 'This is my new post.',
+    userId: 1
+};
+
+const addPost = () => {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: JSON.stringify(newPost),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    }).then(res => res.json()).then(data => {
+        if(data){
+           const showMessage = document.getElementById('showMessage');
+           const showText = document.getElementById('showText');
+           showText.innerText = `Post created successfully!! All information : Title = ${data.title}, Body = ${data.body}.`;
+           showMessage.classList.remove('d-none');
+        }
+    });
+}
