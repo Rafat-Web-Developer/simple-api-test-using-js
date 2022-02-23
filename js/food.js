@@ -5,6 +5,7 @@ const searchFood = () => {
     searchField.value = '';
 }
 const callApiForSearchingFood = searchText => {
+    document.getElementById('showOneMeal').textContent = "";
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
     fetch(url)
         .then(response => response.json())
@@ -52,8 +53,12 @@ const displayMeal = meal => {
         <div class="col-md-8">
         <div class="card-body">
             <h5 class="card-title">${meal.strMeal}</h5>
-            <p class="card-text">${meal.strInstructions.slice(0, 300)}</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <p class="card-text">${meal.strInstructions.slice(0, 500)}</p>
+            <p class="card-text">
+                <small class="text-muted">Food Category : ${meal.strCategory}</small><br>
+                <small class="text-muted">Country : ${meal.strArea}</small>
+            </p>
+            <a href="${meal.strSource}" target="_blank" class="btn btn-danger">Get Food</a>
         </div>
         </div>
     </div>
