@@ -16,12 +16,35 @@ const displayCountries = countries => {
         <div class="card text-white mb-3" style="max-width: 18rem;">
             <div class="card-header bg-success fw-bold">UserID : <span class="text-warning">${country.name.common}</span></div>
             <div class="card-body bg-secondary text-center">
-                <img src="${country.flags.png}" class="img-fluid rounded" alt="flags">
+                <img src="${country.flags.svg}" class="img-fluid rounded" alt="flags">
+                <button class="btn btn-warning w-50 m-3" onclick="showDetails('${country.name.common}')">Details</button>
             </div>
         </div>
         `
         all_posts.appendChild(div);
     });
 }
-
 loadCountries();
+
+const showDetails = countryName => {
+    const url = `https://restcountries.com/v3.1/name/${countryName}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => setDetails(data));
+}
+
+const setDetails = getData => {
+    console.log(getData);
+    const country_name = document.getElementById('country_name');
+    const capital_name = document.getElementById('capital_name');
+    const region_name = document.getElementById('region_name');
+    const population = document.getElementById('population');
+    const independent = document.getElementById('independent');
+    const timezones = document.getElementById('timezones');
+    country_name.innerText = getData[0].name.common;
+    capital_name.innerText = getData[0].capital;
+    region_name.innerText = getData[0].region;
+    population.innerText = getData[0].population;
+    independent.innerText = getData[0].independent;
+    timezones.innerText = getData[0].timezones[0];
+}
