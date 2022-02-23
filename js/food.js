@@ -13,12 +13,12 @@ const callApiForSearchingFood = searchText => {
 
 const displayResult = meals => {
     const show_result = document.getElementById('show_result');
+    show_result.textContent = "";
     meals.forEach(meal => {
-        console.log(meal);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
-        <div class="card h-100">
+        <div class="card h-100 rafat-food-click" onclick="showDetails(${meal.idMeal})">
             <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}_img">
             <div class="card-body">
             <h5 class="card-title">${meal.strMeal}</h5>
@@ -28,4 +28,35 @@ const displayResult = meals => {
         `;
         show_result.appendChild(div);
     });
+}
+
+const showDetails = mealId => {
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayMeal(data.meals[0]));
+}
+
+const displayMeal = meal => {
+    console.log(meal);
+    const showOneMeal = document.getElementById('showOneMeal');
+    showOneMeal.textContent = '';
+    const div = document.createElement('div');
+    div.classList.add('card');
+    div.classList.add('w-75');
+    div.innerHTML = `
+    <div class="row g-0">
+        <div class="col-md-4">
+        <img src="${meal.strMealThumb}" class="img-fluid rounded-start" alt="${meal.strMeal}_img">
+        </div>
+        <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">${meal.strMeal}</h5>
+            <p class="card-text">${meal.strInstructions.slice(0, 300)}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+        </div>
+    </div>
+    `;
+    showOneMeal.appendChild(div);
 }
