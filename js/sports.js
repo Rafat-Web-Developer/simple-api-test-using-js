@@ -1,5 +1,7 @@
 const displaySports = sports => {
     const tbody = document.getElementById('all-sports');
+    const showTable = document.getElementById('showTable');
+    showTable.classList.remove('d-none');
     sports.forEach(sport => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -14,9 +16,12 @@ const displaySports = sports => {
     });
 }
 const callApi = async () => {
+    const showSpinner = document.getElementById('showSpinner');
+    showSpinner.classList.remove('d-none');
     const url = 'https://www.thesportsdb.com/api/v1/json/2/all_sports.php';
     const res = await fetch(url);
     const data = await res.json();
+    showSpinner.classList.add('d-none');
     displaySports(data.sports);
 
 }
