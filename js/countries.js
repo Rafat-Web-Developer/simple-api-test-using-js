@@ -1,8 +1,13 @@
 const loadCountries = () => {
-    // const url = '';
-    fetch('https://restcountries.com/v3.1/all')
+    const url = 'https://restcountries.com/v3.1/all';
+    const showLoading = document.getElementById('showLoading');
+    showLoading.classList.remove('d-none');
+    fetch(url)
         .then(res => res.json())
-        .then(data => displayCountries(data));
+        .then(data => {
+            showLoading.classList.add('d-none');
+            displayCountries(data)
+        });
 }
 
 const displayCountries = countries => {
@@ -26,15 +31,7 @@ const displayCountries = countries => {
 }
 loadCountries();
 
-const showDetails = countryName => {
-    const url = `https://restcountries.com/v3.1/name/${countryName}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => setDetails(data));
-}
-
 const setDetails = getData => {
-    console.log(getData);
     const country_name = document.getElementById('country_name');
     const capital_name = document.getElementById('capital_name');
     const region_name = document.getElementById('region_name');
@@ -47,4 +44,10 @@ const setDetails = getData => {
     population.innerText = getData[0].population;
     independent.innerText = getData[0].independent;
     timezones.innerText = getData[0].timezones[0];
+}
+const showDetails = async (countryName) => {
+    const url = `https://restcountries.com/v3.1/name/${countryName}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    setDetails(data);
 }

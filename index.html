@@ -49,6 +49,12 @@
     <main class="container mt-5">
         <section class="w-75 mx-auto text-center my-3">
           <button class="btn btn-success" onclick="prayerTime()">Show Payer Time</button>
+          <div class="my-3 d-none" id="showLoading">
+            <button class="btn btn-success" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
+          </div>
           <div class="d-none mt-3 text-start border border-3 rounded p-3 border-success text-success" id="showTimeDiv">
             <div class="d-flex justify-content-between">
               <h5>Location : <span id="city"></span></h5>
@@ -78,6 +84,7 @@
     <script>
       const displayPrayerTime = getTime => {
         const time = getTime.datetime[0].times;
+        
         const showTimeDiv = document.getElementById('showTimeDiv');
         const city = document.getElementById('city');
         const date = document.getElementById('date');
@@ -101,10 +108,13 @@
 
       }
       const callApi = async () => {
+        const showLoading = document.getElementById('showLoading');
+        showLoading.classList.remove('d-none');
         const url = 'https://api.pray.zone/v2/times/today.json?city=dhaka';
-          res = await fetch(url);
-          data = await res.json();
-          displayPrayerTime(data.results);
+        res = await fetch(url);
+        data = await res.json();
+        showLoading.classList.add('d-none');
+        displayPrayerTime(data.results);
       }
       const prayerTime = () => {
           callApi();
