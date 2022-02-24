@@ -1,7 +1,12 @@
 const loadPost = () => {
+    const showSpinner = document.getElementById('showSpinner');
+    showSpinner.classList.remove('d-none');
     fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(res => res.json())
-        .then(data => setPost(data));
+    .then(res => res.json())
+    .then(data => {
+            showSpinner.classList.add('d-none');
+            setPost(data)
+        });
 }
 
 const setPost = posts => {

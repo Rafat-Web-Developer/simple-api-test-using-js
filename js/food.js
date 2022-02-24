@@ -6,9 +6,12 @@ const searchFood = () => {
 }
 const callApiForSearchingFood = async searchText => {
     document.getElementById('showOneMeal').textContent = "";
+    const showSpinner = document.getElementById('showSpinner');
+    showSpinner.classList.remove('d-none');
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
     const res = await fetch(url);
     const data = await res.json();
+    showSpinner.classList.add('d-none');
     displayResult(data.meals);
 }
 
