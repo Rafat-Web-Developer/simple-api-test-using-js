@@ -103,3 +103,17 @@ document.getElementById('searchBTN').addEventListener('click', (event) => {
             }
         });
 });
+
+document.getElementById('getRegion').addEventListener('click', async (e) => {
+    const all_posts = document.getElementById('all_posts');
+    all_posts.textContent = '';
+    removeContent('detailsDiv');
+    showContent('showCountrySection');
+    showContent('showLoading');
+    const region = e.target.innerText;
+    const url = `https://restcountries.com/v3.1/region/${region}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    removeContent('showLoading');
+    displayCountries(data);
+});
