@@ -71,6 +71,15 @@ const showDetails = async (countryName) => {
     setDetails(countriesData, weatherData);
 }
 
+document.getElementById('searchCountryFiled').addEventListener('keyup', (e) => {
+    const l = e.target.value;
+    if(l.length > 0){
+        document.getElementById('searchBTN').removeAttribute('disabled');
+    }else{
+        document.getElementById('searchBTN').setAttribute('disabled', true);
+    }
+})
+
 document.getElementById('searchBTN').addEventListener('click', (event) => {
     const all_posts = document.getElementById('all_posts');
     all_posts.textContent = '';
