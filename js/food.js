@@ -32,6 +32,8 @@ document.getElementById('foodCategory').addEventListener('change', async (e) => 
 })
 
 const searchFood = () => {
+    const show_result = document.getElementById('show_result');
+    show_result.textContent = "";
     const searchField = document.getElementById('searchText');
     const searchText = searchField.value;
     searchField.value = '';
