@@ -1,8 +1,8 @@
 const searchFood = () => {
     const searchField = document.getElementById('searchText');
     const searchText = searchField.value;
-    callApiForSearchingFood(searchText);
     searchField.value = '';
+    callApiForSearchingFood(searchText);
 }
 const callApiForSearchingFood = async searchText => {
     document.getElementById('showOneMeal').textContent = "";
@@ -12,7 +12,14 @@ const callApiForSearchingFood = async searchText => {
     const res = await fetch(url);
     const data = await res.json();
     showSpinner.classList.add('d-none');
-    displayResult(data.meals);
+    if(data.meals == null){
+        const show_result = document.getElementById('show_result');
+        show_result.textContent = "";
+        document.getElementById('notFound').classList.remove('d-none');
+    }else{
+        document.getElementById('notFound').classList.add('d-none');
+        displayResult(data.meals);
+    }
 }
 
 const displayResult = meals => {
