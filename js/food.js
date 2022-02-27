@@ -1,3 +1,22 @@
+
+const loadCategory = async () => {
+    const url = `https://www.themealdb.com/api/json/v1/1/list.php?c=list`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayCategory(data.meals);
+}
+loadCategory();
+
+const displayCategory = categories => {
+    const selectId = document.getElementById('foodCategory');
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.strCategory;
+        option.innerText = category.strCategory;
+        selectId.appendChild(option);
+    });
+};
+
 const searchFood = () => {
     const searchField = document.getElementById('searchText');
     const searchText = searchField.value;
