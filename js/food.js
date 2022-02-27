@@ -17,6 +17,20 @@ const displayCategory = categories => {
     });
 };
 
+document.getElementById('foodCategory').addEventListener('change', async (e) => {
+    document.getElementById('showOneMeal').textContent = "";
+    const show_result = document.getElementById('show_result');
+    show_result.textContent = "";
+    const showSpinner = document.getElementById('showSpinner');
+    showSpinner.classList.remove('d-none');
+    const category = document.getElementById('foodCategory').value;
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    showSpinner.classList.add('d-none');
+    displayResult(data.meals);
+})
+
 const searchFood = () => {
     const searchField = document.getElementById('searchText');
     const searchText = searchField.value;
@@ -52,7 +66,7 @@ const displayResult = meals => {
             <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}_img">
             <div class="card-body">
             <h5 class="card-title">${meal.strMeal}</h5>
-            <p class="card-text">${meal.strInstructions.slice(0, 300)}</p>
+            <p class="card-text">${meal.strInstructions?.slice(0, 300)}</p>
             </div>
         </div>
         `;
