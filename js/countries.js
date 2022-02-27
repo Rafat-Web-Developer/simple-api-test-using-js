@@ -20,6 +20,7 @@ const loadCountries = () => {
 }
 
 const displayCountries = countries => {
+    const all_posts = document.getElementById('all_posts');
     countries.forEach(country => {
         const div = document.createElement('div');
         div.classList.add('col');
@@ -68,3 +69,13 @@ const showDetails = async (countryName) => {
     showContent('detailsDiv');
     setDetails(countriesData, weatherData);
 }
+
+document.getElementById('searchBTN').addEventListener('click', (event) => {
+    const all_posts = document.getElementById('all_posts');
+    all_posts.textContent = '';
+    const searchText = document.getElementById('searchCountryFiled').value;
+    const url = `https://restcountries.com/v3.1/name/${searchText}/?fullText=true`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayCountries(data));
+});
