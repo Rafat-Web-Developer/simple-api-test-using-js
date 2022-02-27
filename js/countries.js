@@ -1,18 +1,26 @@
-const loadCountries = () => {
-    const url = 'https://restcountries.com/v3.1/all';
-    const showLoading = document.getElementById('showLoading');
+
+const showContent = getId => {
+    const showLoading = document.getElementById(getId);
     showLoading.classList.remove('d-none');
+}
+const removeContent = getId => {
+    const showLoading = document.getElementById(getId);
+    showLoading.classList.add('d-none');
+}
+
+const loadCountries = () => {
+    showContent('showLoading');
+    const url = 'https://restcountries.com/v3.1/all';
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            showLoading.classList.add('d-none');
+            removeContent('showLoading');
             displayCountries(data)
         });
 }
 
 const displayCountries = countries => {
     countries.forEach(country => {
-        // console.log(country);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -46,9 +54,8 @@ const setDetails = (getCountriesData, getWeatherData) => {
     weather.innerText = `${getWeatherData.current.temp_c} celsius`;
 }
 const showDetails = async (countryName) => {
-    document.getElementById('detailsDiv').classList.add('d-none');
-    const showLoading = document.getElementById('showLoading');
-    showLoading.classList.remove('d-none');
+    removeContent('detailsDiv');
+    showContent('showLoading');
     const CountryUrl = `https://restcountries.com/v3.1/name/${countryName}`;
     const countriesRes = await fetch(CountryUrl);
     const countriesData = await countriesRes.json();
@@ -57,7 +64,7 @@ const showDetails = async (countryName) => {
     const weatherRes = await fetch(WeatherUrl);
     const weatherData = await weatherRes.json();
 
-    showLoading.classList.add('d-none');
-    document.getElementById('detailsDiv').classList.remove('d-none');
+    removeContent('showLoading');
+    showContent('detailsDiv');
     setDetails(countriesData, weatherData);
 }
